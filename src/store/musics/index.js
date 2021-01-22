@@ -4,8 +4,8 @@ import mutations from './mutations'
 const musicsModule = {
   state () {
     return {
-      musicsState: 'loading',
-      musics: []
+      musics: [],
+      musicsState: 'loading'
     }
   },
   getters,
