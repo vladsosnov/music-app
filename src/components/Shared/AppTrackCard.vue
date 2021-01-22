@@ -1,21 +1,37 @@
 <template>
   <div class="index-track-card">
     <img
+      v-if="music.image[3]['#text']"
       :src="music.image[3]['#text']"
       :alt="music.name"
       class="index-track-card__img"
     >
+    <div
+      v-else
+      class="index-track-card__empty-img"
+    >
+      {{ music.name }}
+    </div>
     <div class="index-track-card__details">
       <p class="name">
         <span class="bold">Track:</span>
         {{ music.name }}
       </p>
       <p
+        v-if="music.artist.name"
         class="artist"
         @click="onAuthorClick"
       >
         <span class="bold">Author:</span>
         {{ music.artist.name }}
+      </p>
+      <p
+        v-else
+        class="artist"
+        @click="onAuthorClick"
+      >
+        <span class="bold">Author:</span>
+        {{ music.artist }}
       </p>
       <a
         :href="music.url"
@@ -58,9 +74,28 @@ export default {
     transform: scale(1.05);
   }
 
+  @media (max-width: 768px) {
+    text-align: center;
+  }
+
   &__img {
     max-width: 240px;
     margin-bottom: 8px;
+    border-radius: 6px;
+  }
+
+  &__empty-img {
+    width: 240px;
+    height: 240px;
+    margin-bottom: 8px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    color: #000;
+    font-size: 24px;
+    font-weight: 700;
+    background-color: #ebebeb;
     border-radius: 6px;
   }
 
