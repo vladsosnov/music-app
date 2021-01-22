@@ -1,4 +1,4 @@
 export default {
-  musicsState: (state) => state.musicsState,
-  musics: (state) => state.musics
+  musics: (state) => state.musics,
+  musicsState: (state) => state.musicsState
 }
