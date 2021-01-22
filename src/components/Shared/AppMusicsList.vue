@@ -1,5 +1,6 @@
 <template>
   <section
+    v-if="musics.length > 0"
     class="app-music-list vs-container"
     data-aos="fade-up"
     data-aos-delay="300"
@@ -9,7 +10,7 @@
       :key="music.url"
     >
       <app-track-card
-        v-if="musicsState === 'loaded'"
+        v-if="musicsState === 'loaded' && music"
         :music="music"
       />
       <app-skeleton-track-card v-else-if="musicsState === 'loading'" />
@@ -18,6 +19,12 @@
       </h2>
     </div>
   </section>
+  <h2
+    v-else-if="searchQuery.length > 0"
+    class="empty-result vs-container"
+  >
+    Empty result
+  </h2>
 </template>
 
 <script>
@@ -38,6 +45,11 @@ export default {
       type: String,
       required: true
     }
+  },
+  computed: {
+    searchQuery () {
+      return this.$store.getters.searchQuery
+    }
   }
 }
 </script>
@@ -51,5 +63,10 @@ export default {
   @media (max-width: 768px) {
     grid-gap: 10px;
   }
+}
+
+.empty-result {
+  font-size: 24px;
+  font-weight: 500;
 }
 </style>

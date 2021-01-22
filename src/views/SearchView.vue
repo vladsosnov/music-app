@@ -23,6 +23,14 @@ export default {
     AppMusicsList
   },
   computed: {
+    searchQuery: {
+      get () {
+        return this.$store.getters.searchQuery
+      },
+      set (value) {
+        this.$store.commit('setSearchQuery', value)
+      }
+    },
     searchMusics: {
       get () {
         return this.$store.getters.searchMusics
@@ -46,6 +54,7 @@ export default {
         const response = await fetch(`${process.env.VUE_APP_API_BASE_URL}track.search&track=${search}&api_key=${process.env.VUE_APP_API_KEY}&format=json`)
         const data = await response.json()
 
+        this.searchQuery = search
         this.searchMusics = data.results.trackmatches.track
         this.searchMusicsState = 'loaded'
       } catch (e) {

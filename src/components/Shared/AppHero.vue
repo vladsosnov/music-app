@@ -28,6 +28,7 @@
         title="Search track"
         value=""
         class="search-btn"
+        :class="{ 'search-btn--lock': !search }"
         @click="onSearchClick"
       >
     </div>
@@ -55,8 +56,10 @@ export default {
   },
   methods: {
     onSearchClick () {
-      this.$emit('on-search', this.search)
-      this.search = ''
+      if (this.search.length > 0) {
+        this.$emit('on-search', this.search)
+        this.search = ''
+      }
     }
   }
 }
@@ -65,7 +68,7 @@ export default {
 <style lang="scss" scoped>
 .index-hero {
   min-height: 540px;
-  margin-bottom: 24px;
+  margin-bottom: 32px;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -123,6 +126,12 @@ export default {
       &:hover {
         background-color: rgba(0, 150, 136, 0.9);
         cursor: pointer;
+      }
+
+      &--lock {
+        &:hover {
+          cursor: not-allowed;
+        }
       }
     }
   }

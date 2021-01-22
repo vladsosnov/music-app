@@ -1,13 +1,13 @@
 <template>
   <div class="index-track-card">
     <img
-      v-if="music.image[3]['#text']"
+      v-if="music.image[3]['#text'] && isIndexPage"
       :src="music.image[3]['#text']"
       :alt="music.name"
       class="index-track-card__img"
     >
     <div
-      v-else
+      v-else-if="isIndexPage"
       class="index-track-card__empty-img"
     >
       {{ music.name }}
@@ -52,6 +52,11 @@ export default {
     music: {
       type: Object,
       required: true
+    }
+  },
+  computed: {
+    isIndexPage () {
+      return this.$route.name === 'Index'
     }
   },
   methods: {
