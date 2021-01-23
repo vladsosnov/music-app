@@ -66,7 +66,7 @@ export default {
     onSearchClick () {
       if (this.search.length > 0) {
         this.searchQuery = this.search
-        this.$emit('on-search')
+        this.$router.push({ name: 'Search', query: { music: this.search } })
         this.search = ''
       }
     }
@@ -148,6 +148,5 @@ export default {
       }
     }
   }
-
 }
 </style>

@@ -10,13 +10,9 @@
       :key="index"
     >
       <app-track-card
-        v-if="musicsState === 'loaded' && music"
         :music="music"
+        data-aos="fade-up"
       />
-      <app-skeleton-track-card v-else-if="musicsState === 'loading'" />
-      <h2 v-else>
-        Sorry! Something wrong...
-      </h2>
     </div>
     <div v-observe-visibility="(isVisible) => musicsVisibilityChanged(isVisible)" />
   </section>
@@ -30,13 +26,11 @@
 
 <script>
 import AppTrackCard from '@/components/Shared/AppTrackCard.vue'
-import AppSkeletonTrackCard from '@/components/Shared/AppSkeletonTrackCard.vue'
 
 export default {
   name: 'AppMusicsList',
   components: {
-    AppTrackCard,
-    AppSkeletonTrackCard
+    AppTrackCard
   },
   props: {
     musics: {

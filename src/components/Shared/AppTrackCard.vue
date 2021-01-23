@@ -52,10 +52,7 @@
 export default {
   name: 'IndexTrackCard',
   props: {
-    music: {
-      type: Object,
-      required: true
-    }
+    music: { required: true }
   },
   computed: {
     isIndexPage () {
@@ -64,7 +61,13 @@ export default {
   },
   methods: {
     onAuthorClick () {
-      console.log('23')
+      if (!this.music.artist.name) {
+        this.$router.push({ name: 'AuthorProfile', params: { name: this.music.artist } })
+
+        return
+      }
+
+      this.$router.push({ name: 'AuthorProfile', params: { name: this.music.artist.name } })
     }
   }
 }
@@ -142,6 +145,5 @@ export default {
       }
     }
   }
-
 }
 </style>

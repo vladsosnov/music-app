@@ -10,7 +10,7 @@ const routes = [
     component: () => import(/* webpackChunkName: "index" */ '@/views/IndexView.vue')
   },
   {
-    path: '/author/:id',
+    path: '/author/:name',
     name: 'AuthorProfile',
     component: () => import(/* webpackChunkName: "author-profile" */ '@/views/AuthorProfileView.vue')
   },

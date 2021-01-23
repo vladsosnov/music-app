@@ -72,7 +72,7 @@ export default {
           this.musics = this.musics.concat(musics)
           this.musicsState = 'loaded'
         } else {
-          this.images.isLastRequest = true
+          this.isLastRequest = true
         }
       } catch (e) {
         console.log(e)

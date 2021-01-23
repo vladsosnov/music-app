@@ -2,7 +2,6 @@
   <div class="search-view">
     <app-hero
       title="Search"
-      @on-search="fetchSearchMusics"
     />
     <app-musics-list
       v-if="searchMusics"
@@ -30,7 +29,7 @@ export default {
   },
   computed: {
     searchQuery () {
-      return this.$store.getters.searchQuery
+      return this.$store.getters.searchQuery || this.$route.query.music
     },
     searchMusics: {
       get () {
@@ -57,13 +56,26 @@ export default {
       }
     }
   },
+  watch: {
+    $route: {
+      handler () {
+        this.searchMusics = []
+        this.fetchSearchMusics()
+      },
+      immediate: true
+    }
+  },
   methods: {
     async fetchSearchMusics () {
       if (this.isLastRequest) {
         return
       }
 
-      console.log(this.searchQuery)
+      if (this.searchQuery === undefined) {
+        return
+      }
+
+      this.searchMusicsState = 'loading'
 
       try {
         const response = await fetch(
@@ -77,7 +89,7 @@ export default {
           this.searchMusics = this.searchMusics.concat(searchMusics)
           this.searchMusicsState = 'loaded'
         } else {
-          this.images.isLastRequest = true
+          this.isLastRequest = true
         }
       } catch (e) {
         console.log(e)

@@ -52,6 +52,10 @@ export default {
           color: #000;
           text-decoration: none;
 
+          &:hover {
+            color: blue;
+          }
+
           &:focus {
             outline: none;
           }

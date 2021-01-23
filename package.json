@@ -5,7 +5,9 @@
   "scripts": {
     "serve": "vue-cli-service serve",
     "build": "vue-cli-service build",
-    "lint": "vue-cli-service lint"
+    "lint:scripts": "vue-cli-service lint --no-fix",
+    "lint:styles": "stylelint **/*.{vue,scss}",
+    "lint": "npm run lint:scripts && npm run lint:styles"
   },
   "dependencies": {
     "aos": "^2.3.4",
@@ -32,7 +34,26 @@
     "eslint-plugin-vue": "^6.2.2",
     "sass": "^1.26.5",
     "sass-loader": "^8.0.2",
-    "vue-template-compiler": "^2.6.11"
+    "vue-template-compiler": "^2.6.11",
+    "husky": "^4.2.3",
+    "lint-staged": "^10.1.1",
+    "stylelint": "^13.2.1",
+    "stylelint-config-standard": "^20.0.0",
+    "stylelint-junit-formatter": "^0.2.2",
+    "stylelint-scss": "^3.16.0"
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "lint-staged"
+    }
+  },
+  "lint-staged": {
+    "*.{vue,scss}": [
+      "stylelint"
+    ],
+    "*.{ts,js,vue}": [
+      "npm run lint:scripts"
+    ]
   },
   "eslintConfig": {
     "root": true,
