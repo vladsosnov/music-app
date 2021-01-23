@@ -37,6 +37,7 @@
         {{ music.artist }}
       </p>
       <a
+        v-if="isIndexPage"
         :href="music.url"
         rel="noopener nofollow"
         target="_blank"
