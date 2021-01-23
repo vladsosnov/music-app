@@ -52,12 +52,21 @@ export default {
   computed: {
     isSearchPage () {
       return this.$route.name === 'Search'
+    },
+    searchQuery: {
+      get () {
+        return this.$store.getters.searchQuery
+      },
+      set (value) {
+        this.$store.commit('setSearchQuery', value)
+      }
     }
   },
   methods: {
     onSearchClick () {
       if (this.search.length > 0) {
-        this.$emit('on-search', this.search)
+        this.searchQuery = this.search
+        this.$emit('on-search')
         this.search = ''
       }
     }
@@ -110,6 +119,10 @@ export default {
 
       &:focus {
         outline: 0;
+      }
+
+      @media (max-width: 640px) {
+        padding: 0 10px;
       }
     }
 

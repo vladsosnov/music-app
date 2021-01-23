@@ -5,6 +5,7 @@ const musicsModule = {
   state () {
     return {
       musics: [],
+      musicsPage: 1,
       musicsState: 'loading'
     }
   },

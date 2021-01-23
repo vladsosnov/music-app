@@ -6,8 +6,8 @@
     data-aos-delay="300"
   >
     <div
-      v-for="music in musics"
-      :key="music.url"
+      v-for="(music, index) in musics"
+      :key="index"
     >
       <app-track-card
         v-if="musicsState === 'loaded' && music"
@@ -18,6 +18,7 @@
         Sorry! Something wrong...
       </h2>
     </div>
+    <div v-observe-visibility="(isVisible) => musicsVisibilityChanged(isVisible)" />
   </section>
   <h2
     v-else-if="searchQuery.length > 0"
@@ -49,6 +50,13 @@ export default {
   computed: {
     searchQuery () {
       return this.$store.getters.searchQuery
+    }
+  },
+  methods: {
+    musicsVisibilityChanged (isVisible) {
+      if (isVisible) {
+        this.$emit('scroll-to-bottom')
+      }
     }
   }
 }

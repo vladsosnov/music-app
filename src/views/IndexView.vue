@@ -5,6 +5,7 @@
       v-if="musics"
       :musics="musics"
       :musics-state="musicsState"
+      @scroll-to-bottom="fetchMusics"
     />
   </main>
 </template>
@@ -19,6 +20,11 @@ export default {
     AppHero,
     AppMusicsList
   },
+  data () {
+    return {
+      isLastRequest: false
+    }
+  },
   computed: {
     musics: {
       get () {
@@ -26,6 +32,14 @@ export default {
       },
       set (value) {
         this.$store.commit('setMusics', value)
+      }
+    },
+    musicsPage: {
+      get () {
+        return this.$store.getters.musicsPage
+      },
+      set (value) {
+        this.$store.commit('setMusicsPage', value)
       }
     },
     musicsState: {
@@ -42,12 +56,24 @@ export default {
   },
   methods: {
     async fetchMusics () {
+      if (this.isLastRequest) {
+        return
+      }
+
       try {
-        const response = await fetch(`${process.env.VUE_APP_API_BASE_URL}chart.gettoptracks&api_key=${process.env.VUE_APP_API_KEY}&format=json`)
+        const response = await fetch(
+          `${process.env.VUE_APP_API_BASE_URL}chart.gettoptracks&api_key=${process.env.VUE_APP_API_KEY}&format=json&page=${this.musicsPage++}`
+        )
         const data = await response.json()
 
-        this.musics = data.tracks.track
-        this.musicsState = 'loaded'
+        if (this.musics.length < data.tracks['@attr'].total) {
+          const musics = data.tracks.track
+
+          this.musics = this.musics.concat(musics)
+          this.musicsState = 'loaded'
+        } else {
+          this.images.isLastRequest = true
+        }
       } catch (e) {
         console.log(e)
         this.musicsState = 'failed'
@@ -58,5 +84,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.index-view {}
+.index-view {
+  margin-bottom: 24px;
+}
 </style>

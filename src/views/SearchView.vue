@@ -8,6 +8,7 @@
       v-if="searchMusics"
       :musics="searchMusics"
       :musics-state="searchMusicsState"
+      @scroll-to-bottom="fetchSearchMusics"
     />
   </div>
 </template>
@@ -22,14 +23,14 @@ export default {
     AppHero,
     AppMusicsList
   },
+  data () {
+    return {
+      isLastRequest: false
+    }
+  },
   computed: {
-    searchQuery: {
-      get () {
-        return this.$store.getters.searchQuery
-      },
-      set (value) {
-        this.$store.commit('setSearchQuery', value)
-      }
+    searchQuery () {
+      return this.$store.getters.searchQuery
     },
     searchMusics: {
       get () {
@@ -37,6 +38,14 @@ export default {
       },
       set (value) {
         this.$store.commit('setSearchMusics', value)
+      }
+    },
+    searchMusicsPage: {
+      get () {
+        return this.$store.getters.searchMusicsPage
+      },
+      set (value) {
+        this.$store.commit('setSearchMusicsPage', value)
       }
     },
     searchMusicsState: {
@@ -49,14 +58,27 @@ export default {
     }
   },
   methods: {
-    async fetchSearchMusics (search) {
+    async fetchSearchMusics () {
+      if (this.isLastRequest) {
+        return
+      }
+
+      console.log(this.searchQuery)
+
       try {
-        const response = await fetch(`${process.env.VUE_APP_API_BASE_URL}track.search&track=${search}&api_key=${process.env.VUE_APP_API_KEY}&format=json`)
+        const response = await fetch(
+          `${process.env.VUE_APP_API_BASE_URL}track.search&track=${this.searchQuery}&api_key=${process.env.VUE_APP_API_KEY}&format=json&page=${this.searchMusicsPage++}`
+        )
         const data = await response.json()
 
-        this.searchQuery = search
-        this.searchMusics = data.results.trackmatches.track
-        this.searchMusicsState = 'loaded'
+        if (this.searchMusics.length < data.results['opensearch:totalResults']) {
+          const searchMusics = data.results.trackmatches.track
+
+          this.searchMusics = this.searchMusics.concat(searchMusics)
+          this.searchMusicsState = 'loaded'
+        } else {
+          this.images.isLastRequest = true
+        }
       } catch (e) {
         console.log(e)
         this.searchMusicsState = 'failed'
@@ -67,5 +89,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.search-view {}
+.search-view {
+  margin-bottom: 24px;
+}
 </style>

@@ -6,6 +6,7 @@ const searchMusicsModule = {
     return {
       searchQuery: '',
       searchMusics: [],
+      searchMusicsPage: 1,
       searchMusicsState: 'loading'
     }
   },

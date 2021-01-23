@@ -7,6 +7,9 @@ export default {
   setSearchMusics (state, searchMusics) {
     Vue.set(state, 'searchMusics', searchMusics)
   },
+  setSearchMusicsPage (state, searchMusicsPage) {
+    Vue.set(state, 'searchMusicsPage', searchMusicsPage)
+  },
   setSearchMusicsState (state, searchMusicsState) {
     Vue.set(state, 'searchMusicsState', searchMusicsState)
   }

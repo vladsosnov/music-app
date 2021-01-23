@@ -1,5 +1,8 @@
 <template>
-  <div class="index-track-card">
+  <div
+    class="index-track-card"
+    :class="{ 'index-track-card--track' : !isIndexPage }"
+  >
     <img
       v-if="music.image[3]['#text'] && isIndexPage"
       :src="music.image[3]['#text']"
@@ -81,6 +84,14 @@ export default {
 
   @media (max-width: 768px) {
     text-align: center;
+  }
+
+  &--track {
+    height: 90px;
+    padding: 8px;
+    justify-content: center;
+    border: 1px solid;
+    overflow: hidden;
   }
 
   &__img {
