@@ -75,7 +75,6 @@ export default {
           this.isLastRequest = true
         }
       } catch (e) {
-        console.log(e)
         this.musicsState = 'failed'
       }
     }
