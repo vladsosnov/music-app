@@ -1,6 +1,7 @@
 <template>
   <div
     v-if="author"
+    data-aos="fade-up"
     class="author-card"
   >
     <div class="overlay" />

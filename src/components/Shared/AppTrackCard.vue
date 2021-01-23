@@ -52,7 +52,10 @@
 export default {
   name: 'IndexTrackCard',
   props: {
-    music: { required: true }
+    music: {
+      type: Object,
+      required: true
+    }
   },
   computed: {
     isIndexPage () {

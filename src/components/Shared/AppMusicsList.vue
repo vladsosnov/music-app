@@ -1,6 +1,5 @@
 <template>
   <section
-    v-if="musics.length > 0"
     class="app-music-list vs-container"
     data-aos="fade-up"
     data-aos-delay="300"
@@ -16,12 +15,6 @@
     </div>
     <div v-observe-visibility="(isVisible) => musicsVisibilityChanged(isVisible)" />
   </section>
-  <h2
-    v-else-if="searchQuery.length > 0"
-    class="empty-result vs-container"
-  >
-    Empty result
-  </h2>
 </template>
 
 <script>
@@ -34,6 +27,7 @@ export default {
   },
   props: {
     musics: {
+      type: Array,
       required: true
     },
     musicsState: {

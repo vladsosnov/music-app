@@ -67,7 +67,6 @@ export default {
       if (this.search.length > 0) {
         this.searchQuery = this.search
         this.$router.push({ name: 'Search', query: { music: this.search } })
-        this.search = ''
       }
     }
   }

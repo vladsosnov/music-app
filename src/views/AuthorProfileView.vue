@@ -54,7 +54,6 @@ export default {
 
         this.authorInfo = data.artist
         this.authorInfoState = 'loaded'
-        console.log(this.authorInfo)
       } catch (e) {
         console.log(e)
         this.authorInfoState = 'failed'

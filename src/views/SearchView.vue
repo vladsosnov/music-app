@@ -1,8 +1,6 @@
 <template>
   <div class="search-view">
-    <app-hero
-      title="Search"
-    />
+    <app-hero title="Search" />
     <app-musics-list
       v-if="searchMusics"
       :musics="searchMusics"
@@ -21,11 +19,6 @@ export default {
   components: {
     AppHero,
     AppMusicsList
-  },
-  data () {
-    return {
-      isLastRequest: false
-    }
   },
   computed: {
     searchQuery () {
@@ -67,10 +60,6 @@ export default {
   },
   methods: {
     async fetchSearchMusics () {
-      if (this.isLastRequest) {
-        return
-      }
-
       if (this.searchQuery === undefined) {
         return
       }
@@ -88,8 +77,6 @@ export default {
 
           this.searchMusics = this.searchMusics.concat(searchMusics)
           this.searchMusicsState = 'loaded'
-        } else {
-          this.isLastRequest = true
         }
       } catch (e) {
         console.log(e)
