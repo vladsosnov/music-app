@@ -2,7 +2,8 @@
 
 ## Project setup
 ```
-npm install
+  1) npm install;
+  2) Rename .env.example to .env and paste your API key.
 ```
 
 ### Compiles and hot-reloads for development
